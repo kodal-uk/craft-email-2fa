@@ -16,14 +16,14 @@
 
 {{ forms.textField({
     label: "Verify duration",
-    instructions: 'In seconds, how long after successfully completing two-factor authentication until the users is required to re-authenticate?',
+    instructions: 'In seconds, how long after successfully completing two-factor authentication until the user is required to re-authenticate?',
     name: "verifyDuration",
     value: settings.verifyDuration
 }) }}
 
 {{ forms.textField({
-    label: "Email template",
-    instructions: 'Twig template file used for the verify email. Template must include <code>{{ verifyLink | raw }}</code>' | raw,
+    label: "Email template override",
+    instructions: 'Twig template override file for the verify email. Template must include <code>{{ verifyLink | raw }}</code>' | raw,
     name: "emailTemplate",
     value: settings.emailTemplate
 }) }}

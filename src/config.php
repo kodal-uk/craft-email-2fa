@@ -21,7 +21,7 @@ return [
     "verifyRoute" => '/verify',
 
     /**
-     * Twig template file used for the verify email. Template must include <code>{{ verifyLink | raw }}</code>
+     * Twig template override file for the verify email. Template must include <code>{{ verifyLink | raw }}</code>
      */
     "emailTemplate" => '',
 
@@ -31,7 +31,7 @@ return [
     'verifyCodeLength' => 6,
 
     /**
-     * In seconds, how long after successfully completing two-factor authentication until the users is required to re-authenticate?
+     * In seconds, how long after successfully completing two-factor authentication until the user is required to re-authenticate?
      */
     "verifyDuration" => 604800,
 
