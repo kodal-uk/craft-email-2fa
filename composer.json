@@ -1,0 +1,46 @@
+{
+    "name": "kodal-uk/craft-email-2fa",
+    "description": "Email based Two-factor authentication plugin for Craft CMS",
+    "type": "craft-plugin",
+    "version": "1.0.0",
+    "keywords": [
+        "craft",
+        "cms",
+        "craftcms",
+        "craft-plugin",
+        "kodal",
+        "two-factor",
+        "email",
+        "2fa",
+        "authentication"
+    ],
+    "minimum-stability": "stable",
+    "support": {
+        "docs": "https://github.com/kodal-uk/craft-email-2fa/blob/master/README.md",
+        "issues": "https://github.com/kodal-uk/craft-email-2fa/blob/master/issues"
+    },
+    "license": "MIT",
+    "authors": [
+        {
+            "name": "Sean Jermey",
+            "homepage": "https://github.com/seanjermey"
+        }
+    ],
+    "require": {
+        "craftcms/cms": "^3.3.0-RC1"
+    },
+    "autoload": {
+        "psr-4": {
+          "Kodal\\Email2FA\\": "src/",
+          "Kodal\\Email2FA\\TwigExtensions\\": "src/twigextensions"
+        }
+    },
+    "extra": {
+        "name": "Email 2FA",
+        "handle": "email-2fa",
+        "hasCpSettings": true,
+        "hasCpSection": false,
+        "changelogUrl": "https://github.com/kodal-uk/craft-email-2fa/blob/master/CHANGELOG.md",
+        "class": "Kodal\\Email2FA\\Plugin"
+    }
+}

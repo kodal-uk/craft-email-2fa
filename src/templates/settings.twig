@@ -1,0 +1,36 @@
+{% import "_includes/forms" as forms %}
+
+{{ forms.textField({
+    label: "Verify route",
+    instructions: "The route to the page with contains the verify form, see documentation for form markup example.",
+    name: "verifyRoute",
+    value: settings.verifyRoute
+}) }}
+
+{{ forms.textField({
+    label: "Verify code length",
+    instructions: 'How may characters should the verify code contain?',
+    name: "verifyCodeLength",
+    value: settings.verifyCodeLength
+}) }}
+
+{{ forms.textField({
+    label: "Verify duration",
+    instructions: 'In seconds, how long after successfully completing two-factor authentication until the users is required to re-authenticate?',
+    name: "verifyDuration",
+    value: settings.verifyDuration
+}) }}
+
+{{ forms.textField({
+    label: "Email template",
+    instructions: 'Twig template file used for the verify email. Template must include <code>{{ verifyLink | raw }}</code>' | raw,
+    name: "emailTemplate",
+    value: settings.emailTemplate
+}) }}
+
+{{ forms.textField({
+    label: "Session handle",
+    instructions: 'Set the authentication session handle, changing this value will invalidate all current athentication states.',
+    name: "sessionHandle",
+    value: settings.sessionHandle
+}) }}
