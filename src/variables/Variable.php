@@ -23,6 +23,14 @@ class Variable
         return Plugin::$plugin->getSettings()->verifyCodeLength;
     }
 
+    /**
+     * @return mixed
+     */
+    public function isVerified()
+    {
+        return Plugin::$plugin->auth->isLoggedIn();
+    }
+
     // Protected Methods
     // =========================================================================
 }
