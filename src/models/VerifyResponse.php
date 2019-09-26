@@ -18,6 +18,11 @@ class VerifyResponse
     public $code;
 
     /**
+     * @var
+     */
+    public $hash;
+
+    /**
      * @var \DateTime
      */
     public $timestamp;
@@ -30,13 +35,15 @@ class VerifyResponse
      *
      * @param $verified
      * @param $code
+     * @param $hash
      *
      * @throws \Exception
      */
-    public function __construct($verified, $code)
+    public function __construct($verified, $code, $hash)
     {
         $this->verified  = $verified;
         $this->code      = $code;
+        $this->hash      = $hash;
         $this->timestamp = new \DateTime();
     }
 

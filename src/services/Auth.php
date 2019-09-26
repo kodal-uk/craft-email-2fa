@@ -49,7 +49,10 @@ class Auth
      */
     public function isLoggedIn()
     {
-        return Plugin::$plugin->session->has('auth');
+        $auth = Plugin::$plugin->cookie->get('auth');
+        $hash = Plugin::$plugin->storage->get('hash');
+
+        return $auth === $hash;
     }
 
     /**
@@ -60,7 +63,7 @@ class Auth
      */
     public function login($event)
     {
-        if (!$this->recentlyAuthenticated()) {
+        if (!$this->isLoggedIn()) {
            return $this->triggerAuthChallenge();
         }
 
@@ -74,19 +77,17 @@ class Auth
      */
     public function logout($event)
     {
-        Plugin::$plugin->session->remove('auth');
+
     }
 
     /**
-     * @param $hash
+     * @param $hash string
      */
-    public function twoFactorLogin($hash)
+    public function twoFactorLogin(string $hash)
     {
-        if ( ! Plugin::$plugin->session->has('last_auth')) {
-            Plugin::$plugin->session->set('last_auth', new \DateTime());
-        }
-
-        return Plugin::$plugin->session->set('auth', $hash);
+        return Plugin::$plugin->cookie->set('auth', $hash, [
+            'expire' => time() + $this->settings->verifyDuration
+        ]);
     }
 
     // Protected Methods
@@ -103,30 +104,13 @@ class Auth
     }
 
     /**
-     * @return bool
-     * @throws \Exception
-     */
-    protected function recentlyAuthenticated()
-    {
-        if ( ! Plugin::$plugin->session->has('last_auth')) {
-            return false;
-        }
-
-        $lastAuthDate = Plugin::$plugin->session->get('last_auth');
-        $expiresDate  = (clone $lastAuthDate)->add(new \DateInterval('PT'.$this->settings->verifyDuration.'S'));
-        $nowDate      = new \DateTime();
-
-        return $expiresDate > $nowDate;
-    }
-
-    /**
      * @return mixed
      */
     protected function simulateVerification()
     {
         Plugin::$plugin->verify->triggerAuthChallenge(false);
 
-        $verifyCode = Plugin::$plugin->session->get('verify');
+        $verifyCode = Plugin::$plugin->storage->get('verify');
 
         return Plugin::$plugin->verify->verify($verifyCode);
     }

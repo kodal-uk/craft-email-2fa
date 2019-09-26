@@ -10,7 +10,8 @@ use craft\web\UrlManager;
 use Kodal\Email2FA\models\Settings;
 use Kodal\Email2FA\services\Auth;
 use Kodal\Email2FA\services\Email;
-use Kodal\Email2FA\services\Session;
+use Kodal\Email2FA\services\Cookie;
+use Kodal\Email2FA\services\Storage;
 use Kodal\Email2FA\services\Verify;
 use Kodal\Email2FA\TwigExtensions\RequireTwoFactorLogin;
 use Kodal\Email2FA\variables\Variable;
@@ -59,7 +60,8 @@ class Plugin extends \craft\base\Plugin
             'auth'    => Auth::class,
             'verify'  => Verify::class,
             'email'   => Email::class,
-            'session' => Session::class,
+            'cookie' => Cookie::class,
+            'storage' => Storage::class,
         ]);
 
         Event::on(

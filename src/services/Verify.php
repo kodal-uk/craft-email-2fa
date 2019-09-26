@@ -27,7 +27,7 @@ class Verify
         $verifyResponse = $this->validateAuthResponse($verifyCode);
 
         if ($verifyResponse->verified) {
-            Plugin::$plugin->auth->twoFactorLogin($verifyResponse);
+            Plugin::$plugin->auth->twoFactorLogin($verifyResponse->hash);
 
             return true;
         }
@@ -43,10 +43,10 @@ class Verify
      */
     public function validateAuthResponse($verifyCodeFromResponse)
     {
-        $hashFromSession = Plugin::$plugin->session->get('hash');
+        $hashFromSession = Plugin::$plugin->storage->get('hash');
         $verified        = $this->generateHash($verifyCodeFromResponse) === $hashFromSession;
 
-        return new VerifyResponse($verified, $verifyCodeFromResponse);
+        return new VerifyResponse($verified, $verifyCodeFromResponse, $hashFromSession);
     }
 
     /**
@@ -57,8 +57,8 @@ class Verify
         $verifyCode = $this->generateVerifyCode();
         $hash       = $this->generateHash($verifyCode);
 
-        Plugin::$plugin->session->set('hash', $hash);
-        Plugin::$plugin->session->set('verify', $verifyCode);
+        Plugin::$plugin->storage->set('hash', $hash);
+        Plugin::$plugin->storage->set('verify', $verifyCode);
 
         if($sendVerifyEmail) {
             Plugin::$plugin->email->sendVerifyEmail($verifyCode, $hash);
@@ -70,8 +70,8 @@ class Verify
      */
     public function resendVerifyEmail()
     {
-        $verifyCode = Plugin::$plugin->session->get('verify');
-        $hash       = Plugin::$plugin->session->get('hash');
+        $verifyCode = Plugin::$plugin->storage->get('verify');
+        $hash       = Plugin::$plugin->storage->get('hash');
 
         if ($verifyCode) {
             Plugin::$plugin->email->sendVerifyEmail($verifyCode, $hash);

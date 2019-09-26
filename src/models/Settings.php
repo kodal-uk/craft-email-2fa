@@ -35,6 +35,11 @@ class Settings extends Model
      */
     public $sessionHandle = 'email-2fa';
 
+    /**
+     * @var string
+     */
+    public $postFirstLoginRedirect;
+
     // Public Methods
     // =========================================================================
 

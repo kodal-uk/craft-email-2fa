@@ -73,7 +73,7 @@ class VerifyController extends Controller
         $request = Craft::$app->getRequest();
         $hash    = $request->getQueryParam('v');
 
-        $hashFromSession = Plugin::$plugin->session->get('hash');
+        $hashFromSession = Plugin::$plugin->storage->get('hash');
 
         if ($hash !== $hashFromSession) {
             $this->session->setError(Craft::t('email-2fa', 'Automatic verification failed.'));
@@ -81,7 +81,7 @@ class VerifyController extends Controller
             return $this->redirect($this->settings->verifyRoute);
         }
 
-        $verifyCode = Plugin::$plugin->session->get('verify');
+        $verifyCode = Plugin::$plugin->storage->get('verify');
         $verified   = $this->verify($verifyCode);
 
         if ($verified) {
@@ -101,8 +101,8 @@ class VerifyController extends Controller
      */
     public function actionResend()
     {
-        $verifyCode = Plugin::$plugin->session->get('verify');
-        $hash       = Plugin::$plugin->session->get('hash');
+        $verifyCode = Plugin::$plugin->storage->get('verify');
+        $hash       = Plugin::$plugin->storage->get('hash');
 
         Plugin::$plugin->verify->resendVerifyEmail($verifyCode, $hash);
 
