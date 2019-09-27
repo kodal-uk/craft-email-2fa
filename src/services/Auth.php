@@ -52,7 +52,7 @@ class Auth
         $auth = Plugin::$plugin->cookie->get('auth');
         $hash = Plugin::$plugin->storage->get('hash');
 
-        return $auth === $hash;
+        return is_string($auth) && is_string($hash) && !empty($auth) && !empty($hash) && $auth === $hash;
     }
 
     /**

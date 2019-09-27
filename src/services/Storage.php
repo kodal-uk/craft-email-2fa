@@ -18,6 +18,8 @@ class Storage
     public function __construct()
     {
         $this->storagePath = \Craft::$app->path->getStoragePath() . DIRECTORY_SEPARATOR . 'email-2fa' . DIRECTORY_SEPARATOR;
+
+        FileHelper::createDirectory($this->storagePath);
     }
 
     /**
@@ -35,9 +37,13 @@ class Storage
      * @return false|string
      */
     public function get($key) {
-        $data = file_get_contents($this->getFilePath($key));
+        if($this->has($key)) {
+            $data = file_get_contents($this->getFilePath($key));
 
-        return unserialize($data);
+            return unserialize($data);
+        }
+
+        return false;
     }
 
     /**
