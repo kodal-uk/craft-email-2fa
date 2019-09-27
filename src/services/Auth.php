@@ -27,7 +27,7 @@ class Auth
     {
 
         $this->settings = Plugin::$plugin->getSettings();
-        $this->response = Craft::$app->response;
+        $this->response = Craft::$app->getResponse();
     }
 
     // Public Methods

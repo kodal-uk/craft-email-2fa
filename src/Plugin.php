@@ -84,6 +84,14 @@ class Plugin extends \craft\base\Plugin
 
         Event::on(
             User::class,
+            User::EVENT_BEFORE_LOGIN,
+            function (UserEvent $event) {
+                Craft::$app->getSession()->set('firstTimeLogin', !$event->identity->lastLoginDate);
+            }
+        );
+
+        Event::on(
+            User::class,
             User::EVENT_BEFORE_LOGOUT,
             function (UserEvent $event) {
                 $this->auth->logout($event);

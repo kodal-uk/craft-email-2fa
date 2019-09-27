@@ -54,9 +54,15 @@ class VerifyController extends Controller
         $verified = $this->verify($verifyCode);
 
         if ($verified) {
+            $config = Craft::$app->getConfig();
+            $user = Craft::$app->getUser();
             $this->session->setNotice(Craft::t('email-2fa', 'Logged in.'));
 
-            return $this->redirect(Craft::$app->projectConfig->get('postLoginRedirect'));
+            if(Craft::$app->getSession()->get('firstTimeLogin')) {
+                return $this->redirect($config->general->activateAccountSuccessPath);
+            }
+
+            return $this->redirect($user->getReturnUrl());
 
         } else {
             $this->session->setError(Craft::t('email-2fa', 'Verification failed.'));
@@ -85,9 +91,15 @@ class VerifyController extends Controller
         $verified   = $this->verify($verifyCode);
 
         if ($verified) {
+            $config = Craft::$app->getConfig();
+            $user = Craft::$app->getUser();
             $this->session->setNotice(Craft::t('email-2fa', 'Logged in.'));
 
-            return $this->redirect(Craft::$app->projectConfig->get('postLoginRedirect'));
+            if(Craft::$app->getSession()->get('firstTimeLogin')) {
+                return $this->redirect($config->general->activateAccountSuccessPath);
+            }
+
+            return $this->redirect($user->getReturnUrl());
 
         } else {
             $this->session->setError(Craft::t('email-2fa', 'Verification failed.'));
