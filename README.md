@@ -16,7 +16,7 @@ To install the plugin, follow these instructions.
 
 2. Then tell Composer to load the plugin:
 
-        composer require kodal/craft-email-2fa
+        composer require kodal-uk/craft-email-2fa
 
 3. In the Control Panel, go to Settings → Plugins and click the “Install” button for Email 2FA.
 
