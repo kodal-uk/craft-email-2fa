@@ -4,6 +4,7 @@ namespace Kodal\Email2FA\Services;
 
 use Craft;
 use Kodal\Email2FA\Plugin;
+use craft\helpers\UrlHelper;
 
 /**
  * Class Auth
@@ -39,7 +40,7 @@ class Auth
     public function requireLogin()
     {
         if ( ! $this->isLoggedIn()) {
-            $this->response->redirect($this->settings->verifyRoute);
+            $this->response->redirect(UrlHelper::siteUrl() . $this->settings->verifyRoute);
         }
     }
 
